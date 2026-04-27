@@ -24,6 +24,7 @@ void godot::SpiderDuo::_bind_methods()
 void godot::SpiderDuo::_ready()
 {
     set_process(true);
+    set_name("SpiderDuo");
 
     pUrsula = memnew(Spider);
     pUrsula->set_name("Ursula");
@@ -177,7 +178,6 @@ void godot::SpiderDuo::solve_constraints()
 bool godot::SpiderDuo::touchesRope(Node2D *obj)
 {
     const RopePoint* r = rope.ptr();
-    print_line("touches rope called");
     Vector2 p = to_local(obj->get_global_position());
     float radius = 10.0f;
 
@@ -198,14 +198,54 @@ bool godot::SpiderDuo::touchesRope(Node2D *obj)
 
         Vector2 closest = a + ab * t;
 
-        print_line((p - closest).length());
-
         if ((p - closest).length() <= radius)
         {
-            print_line("Collision detected!");
             return true;
         }
     }
 
     return false;
+}
+
+bool godot::SpiderDuo::isTense() const
+{
+    return is_tense;
+}
+
+void godot::Enemy::_bind_methods()
+{
+}
+
+void godot::Enemy::_ready()
+{
+    Ref<Texture2D> source = ResourceLoader::get_singleton()->load("zuk.png");
+
+    set_texture(source);
+
+    set_global_position({500.0f, 500.0f});
+    spidersNode = get_parent()->get_node_or_null("SpiderDuo");
+    spiderNode = spidersNode->get_node_or_null("Ursula");
+
+
+}
+
+void godot::Enemy::_process(double delta)
+{
+    Spider* spider = Object::cast_to<Spider>(spiderNode);
+    SpiderDuo* spiderDuo = Object::cast_to<SpiderDuo>(spidersNode);
+
+    if(!spider || !spiderDuo) return;
+
+    Vector2 spiderPos = spider->get_global_position();
+    Vector2 bugPos = get_global_position();
+
+    Vector2 unitVec = (spiderPos - bugPos).normalized();
+
+    set_global_position(bugPos + unitVec * 100.0 * delta);
+
+    if(spiderDuo->touchesRope(this) && spiderDuo->isTense())
+    {
+        queue_free();
+        return;
+    }
 }
