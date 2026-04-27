@@ -3,6 +3,7 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/classes/tile_map_layer.hpp>
 
 void godot::Spider::_bind_methods()
 {
@@ -27,7 +28,7 @@ void godot::SpiderDuo::_ready()
 {
     set_process(true);
     set_name("SpiderDuo");
-
+    
     pUrsula = memnew(Spider);
     pUrsula->set_name("Ursula");
 
@@ -43,8 +44,8 @@ void godot::SpiderDuo::_ready()
     pUrsula->set_texture(ursulaPNG);
     pMartin->set_texture(martinPNG);
 
-    pUrsula->set_scale({2, 2});
-    pMartin->set_scale({2, 2});
+    pUrsula->set_scale({0.5, 0.5});
+    pMartin->set_scale({0.5, 0.5});
 
     rope.resize(rope_segments + 1);
 
@@ -72,33 +73,70 @@ void godot::SpiderDuo::_process(double delta)
         return;
     }
 
-    Input* input = Input::get_singleton();
+    Node *tilemap_node = get_parent()->get_node_or_null("Collisions");
+    TileMapLayer *tilemap_layer = Object::cast_to<TileMapLayer>(tilemap_node);
 
-    Vector2 ursulaVelocity;
+    Input *input = Input::get_singleton();
 
-    if(input->is_action_pressed("ui_up"))
-        ursulaVelocity.y -= 1;
-    if(input->is_action_pressed("ui_down"))
-        ursulaVelocity.y += 1;
-    if(input->is_action_pressed("ui_left"))
-        ursulaVelocity.x -= 1;
-    if(input->is_action_pressed("ui_right"))
-        ursulaVelocity.x += 1;
-    
-    pUrsula->set_position(pUrsula->get_position() + ursulaVelocity * 200 * delta);
+    Vector2 ursula_dir;
 
-    Vector2 martinVelocity;
+    if (input->is_action_pressed("ui_up")) ursula_dir.y -= 1;
+    if (input->is_action_pressed("ui_down")) ursula_dir.y += 1;
+    if (input->is_action_pressed("ui_left")) ursula_dir.x -= 1;
+    if (input->is_action_pressed("ui_right")) ursula_dir.x += 1;
 
-    if(input->is_action_pressed("ui_second_up"))
-        martinVelocity.y -= 1;
-    if(input->is_action_pressed("ui_second_down"))
-        martinVelocity.y += 1;
-    if(input->is_action_pressed("ui_second_left"))
-        martinVelocity.x -= 1;
-    if(input->is_action_pressed("ui_second_right"))
-        martinVelocity.x += 1;
-    
-    pMartin->set_position(pMartin->get_position() + martinVelocity * 200 * delta);
+    if (ursula_dir != Vector2())
+        ursula_dir = ursula_dir.normalized();
+
+    Vector2 martin_dir;
+
+    if (input->is_action_pressed("ui_second_up")) martin_dir.y -= 1;
+    if (input->is_action_pressed("ui_second_down")) martin_dir.y += 1;
+    if (input->is_action_pressed("ui_second_left")) martin_dir.x -= 1;
+    if (input->is_action_pressed("ui_second_right")) martin_dir.x += 1;
+
+    if (martin_dir != Vector2())
+        martin_dir = martin_dir.normalized();
+
+
+
+    Vector2 ursula_pos = pUrsula->get_position();
+
+    Vector2 ursula_try_x = ursula_pos + Vector2(ursula_dir.x * 200.0f * delta, 0);
+    Vector2 ursula_local_x = tilemap_layer->to_local(ursula_try_x);
+    Vector2i cell_x = tilemap_layer->local_to_map(ursula_local_x);
+
+    if (tilemap_layer->get_cell_source_id(cell_x) == -1)
+        ursula_pos.x = ursula_try_x.x;
+
+    Vector2 ursula_try_y = ursula_pos + Vector2(0, ursula_dir.y * 200.0f * delta);
+    Vector2 ursula_local_y = tilemap_layer->to_local(ursula_try_y);
+    Vector2i cell_y = tilemap_layer->local_to_map(ursula_local_y);
+
+    if (tilemap_layer->get_cell_source_id(cell_y) == -1)
+        ursula_pos.y = ursula_try_y.y;
+
+    pUrsula->set_position(ursula_pos);
+
+
+
+    Vector2 martin_pos = pMartin->get_position();
+
+    Vector2 martin_try_x = martin_pos + Vector2(martin_dir.x * 200.0f * delta, 0);
+    Vector2 martin_local_x = tilemap_layer->to_local(martin_try_x);
+    Vector2i martin_cell_x = tilemap_layer->local_to_map(martin_local_x);
+
+    if (tilemap_layer->get_cell_source_id(martin_cell_x) == -1)
+        martin_pos.x = martin_try_x.x;
+
+    Vector2 martin_try_y = martin_pos + Vector2(0, martin_dir.y * 200.0f * delta);
+    Vector2 martin_local_y = tilemap_layer->to_local(martin_try_y);
+    Vector2i martin_cell_y = tilemap_layer->local_to_map(martin_local_y);
+
+    if (tilemap_layer->get_cell_source_id(martin_cell_y) == -1)
+        martin_pos.y = martin_try_y.y;
+
+    pMartin->set_position(martin_pos);
 
     Vector2 deltaVec = pUrsula->get_position() - pMartin->get_position();
     float dist = deltaVec.length();
@@ -138,13 +176,13 @@ void godot::SpiderDuo::_draw()
 
     for(int i = 0; i < rope.size() - 1; i++)
     {
-        draw_line(rope[i].pos, rope[i + 1].pos, col, 2.0);
+        draw_line(rope[i].pos, rope[i + 1].pos, col, 1.0);
     }
 
     float health_ratio = mHealthPoints / 100.0f;
 
-    Vector2 bar_pos = posMartin + Vector2(-50, -40);
-    Vector2 bar_size = Vector2(100, 10);
+    Vector2 bar_pos = posMartin + Vector2(-10, -8);
+    Vector2 bar_size = Vector2(20, 2);
 
     draw_rect(Rect2(bar_pos, bar_size), Color(0.2, 0.2, 0.2));
 
@@ -153,7 +191,7 @@ void godot::SpiderDuo::_draw()
         Color(0, 1, 0)
     );
 
-    bar_pos = posUrsula + Vector2(-50, -40);
+    bar_pos = posUrsula + Vector2(-10, -8);
         draw_rect(Rect2(bar_pos, bar_size), Color(0.2, 0.2, 0.2));
 
     draw_rect(

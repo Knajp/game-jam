@@ -32,9 +32,9 @@ namespace godot
 
         Vector<RopePoint> rope;
         int rope_segments = 20;
-        float rope_length = 200.0f;
+        float rope_length = 15.0f;
 
-        float max_distance = 300.0f;
+        float max_distance = 75.0f;
         bool is_tense = false;
 
         int mHealthPoints = 100;
