@@ -34,8 +34,8 @@ void godot::SpiderDuo::_ready()
     add_child(pUrsula);
     add_child(pMartin);
 
-    Ref<Texture2D> ursulaPNG = ResourceLoader::get_singleton()->load("martin.png");
-    Ref<Texture2D> martinPNG = ResourceLoader::get_singleton()->load("ursula.png");
+    Ref<Texture2D> ursulaPNG = ResourceLoader::get_singleton()->load("ursula.png");
+    Ref<Texture2D> martinPNG = ResourceLoader::get_singleton()->load("martin.png");
 
     pUrsula->set_texture(ursulaPNG);
     pMartin->set_texture(martinPNG);
@@ -105,7 +105,9 @@ void godot::SpiderDuo::_process(double delta)
 
         pMartin->set_position(pMartin->get_position() + correction);
         pUrsula->set_position(pUrsula->get_position() - correction);
-    }
+
+        is_tense = true;
+    } else is_tense = false;
 
     verlet_step(delta);
     solve_constraints();
@@ -122,9 +124,14 @@ void godot::SpiderDuo::_draw()
 
     if(rope.size() < 2) return;
 
+    Color col;
+    if(is_tense)
+        col = Color(1,0,0);
+    else col = Color(1,1,1);
+
     for(int i = 0; i < rope.size() - 1; i++)
     {
-        draw_line(rope[i].pos, rope[i + 1].pos, Color(1,1,1), 2.0);
+        draw_line(rope[i].pos, rope[i + 1].pos, col, 2.0);
     }
 }
 
@@ -169,30 +176,34 @@ void godot::SpiderDuo::solve_constraints()
 
 bool godot::SpiderDuo::touchesRope(Node2D *obj)
 {
-    RopePoint* r = rope.ptrw();
-
-    Vector2 p = obj->get_global_position();
-
+    const RopePoint* r = rope.ptr();
+    print_line("touches rope called");
+    Vector2 p = to_local(obj->get_global_position());
     float radius = 10.0f;
 
-    for(int i = 0; i < rope_segments; i++)
+    for (int i = 0; i < rope_segments - 1; i++)
     {
         Vector2 a = r[i].pos;
-        Vector2 b = r[i+1].pos;
+        Vector2 b = r[i + 1].pos;
 
         Vector2 ab = b - a;
         Vector2 ap = p - a;
 
-        float t = ap.dot(ab) / ab.length_squared();
+        float denom = ab.length_squared();
+        if (denom < 0.000001f)
+            continue;
+
+        float t = ap.dot(ab) / denom;
         t = Math::clamp(t, 0.0f, 1.0f);
 
         Vector2 closest = a + ab * t;
 
-        float dist = (p - closest).length();
+        print_line((p - closest).length());
 
-        if(dist <= radius)
+        if ((p - closest).length() <= radius)
         {
             print_line("Collision detected!");
+            return true;
         }
     }
 

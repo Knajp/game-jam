@@ -35,6 +35,7 @@ namespace godot
         float rope_length = 200.0f;
 
         float max_distance = 300.0f;
+        bool is_tense = false;
     public:
         void _ready();
         void _process(double delta);
@@ -45,6 +46,15 @@ namespace godot
 
         bool touchesRope(Node2D* obj);
 
+    };
+
+
+    class Enemy : public Sprite2D
+    {
+        GDCLASS(Enemy, Sprite2D)
+    protected:
+        static void _bind_methods();
+    
     };
 
 }
