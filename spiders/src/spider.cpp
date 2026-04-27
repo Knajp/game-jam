@@ -4,17 +4,12 @@
 
 void godot::Spider::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("touches_rope", "obj"), &SpiderDuo::touchesRope);
+    ClassDB::bind_method(D_METHOD("touchesRope", "obj"), &SpiderDuo::touchesRope);
 }
 
 void godot::Spider::_ready()
 {
-    Ref<Texture2D> texture = ResourceLoader::get_singleton()->load("res://spidey.png");
-
-    if(texture.is_null())
-        print_error("Failed to load spider texture!");
-
-    set_texture(texture);
+    
 }
 
 void godot::Spider::_process(double delta)
@@ -31,7 +26,10 @@ void godot::SpiderDuo::_ready()
     set_process(true);
 
     pUrsula = memnew(Spider);
+    pUrsula->set_name("Ursula");
+
     pMartin = memnew(Spider);
+    pMartin->set_name("Martin");
 
     add_child(pUrsula);
     add_child(pMartin);
@@ -42,8 +40,8 @@ void godot::SpiderDuo::_ready()
     pUrsula->set_texture(ursulaPNG);
     pMartin->set_texture(martinPNG);
 
-    pUrsula->set_scale({0.3, 0.3});
-    pMartin->set_scale({0.3, 0.3});
+    pUrsula->set_scale({2, 2});
+    pMartin->set_scale({2, 2});
 
     rope.resize(rope_segments + 1);
 
@@ -193,7 +191,9 @@ bool godot::SpiderDuo::touchesRope(Node2D *obj)
         float dist = (p - closest).length();
 
         if(dist <= radius)
-            return true;
+        {
+            print_line("Collision detected!");
+        }
     }
 
     return false;
