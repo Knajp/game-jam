@@ -33,6 +33,8 @@ namespace godot
         Vector<RopePoint> rope;
         int rope_segments = 20;
         float rope_length = 200.0f;
+
+        float max_distance = 300.0f;
     public:
         void _ready();
         void _process(double delta);
@@ -40,6 +42,8 @@ namespace godot
 
         void verlet_step(double delta);
         void solve_constraints();
+
+        bool touchesRope(Node2D* obj);
 
     };
 

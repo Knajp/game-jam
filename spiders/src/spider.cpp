@@ -4,6 +4,7 @@
 
 void godot::Spider::_bind_methods()
 {
+    ClassDB::bind_method(D_METHOD("touches_rope", "obj"), &SpiderDuo::touchesRope);
 }
 
 void godot::Spider::_ready()
@@ -94,6 +95,20 @@ void godot::SpiderDuo::_process(double delta)
     
     pMartin->set_position(pMartin->get_position() + martinVelocity * 200 * delta);
 
+    Vector2 deltaVec = pUrsula->get_position() - pMartin->get_position();
+    float dist = deltaVec.length();
+
+    if(dist > max_distance)
+    {
+        Vector2 dir = deltaVec / dist;
+        float excess = dist - max_distance;
+
+        Vector2 correction = dir * (excess * 0.5f);
+
+        pMartin->set_position(pMartin->get_position() + correction);
+        pUrsula->set_position(pUrsula->get_position() - correction);
+    }
+
     verlet_step(delta);
     solve_constraints();
 
@@ -152,4 +167,34 @@ void godot::SpiderDuo::solve_constraints()
             if(!b.pinned) b.pos -= correction;
         }
     }
+}
+
+bool godot::SpiderDuo::touchesRope(Node2D *obj)
+{
+    RopePoint* r = rope.ptrw();
+
+    Vector2 p = obj->get_global_position();
+
+    float radius = 10.0f;
+
+    for(int i = 0; i < rope_segments; i++)
+    {
+        Vector2 a = r[i].pos;
+        Vector2 b = r[i+1].pos;
+
+        Vector2 ab = b - a;
+        Vector2 ap = p - a;
+
+        float t = ap.dot(ab) / ab.length_squared();
+        t = Math::clamp(t, 0.0f, 1.0f);
+
+        Vector2 closest = a + ab * t;
+
+        float dist = (p - closest).length();
+
+        if(dist <= radius)
+            return true;
+    }
+
+    return false;
 }
