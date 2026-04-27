@@ -1,5 +1,10 @@
 [gd_scene format=3 uid="uid://0uvw4f8s87wk"]
 
+[ext_resource type="Texture2D" uid="uid://bxxg686hdcn22" path="res://zuk.png" id="1_wtcfe"]
+
 [node name="Node2D" type="Node2D" unique_id=847136133]
 
 [node name="SpiderDuo" type="SpiderDuo" parent="." unique_id=1595930435]
+
+[node name="Enemy" type="Enemy" parent="." unique_id=1633927416]
+texture = ExtResource("1_wtcfe")

@@ -8,6 +8,7 @@ void initialize_spider_module(godot::ModuleInitializationLevel p_level) {
     if (p_level != godot::MODULE_INITIALIZATION_LEVEL_SCENE) return;
     godot::ClassDB::register_class<godot::Spider>();
     godot::ClassDB::register_class<godot::SpiderDuo>();
+    godot::ClassDB::register_class<godot::Enemy>();
 }
 
 void uninitialize_spider_module(godot::ModuleInitializationLevel p_level) {

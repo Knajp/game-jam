@@ -45,6 +45,7 @@ namespace godot
         void solve_constraints();
 
         bool touchesRope(Node2D* obj);
+        bool isTense() const;
 
     };
 
@@ -54,7 +55,13 @@ namespace godot
         GDCLASS(Enemy, Sprite2D)
     protected:
         static void _bind_methods();
-    
+    public:
+        void _ready();
+        void _process(double delta);
+
+    private:
+        Node* spiderNode = nullptr;
+        Node* spidersNode = nullptr;
     };
 
 }
