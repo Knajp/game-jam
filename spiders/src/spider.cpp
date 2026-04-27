@@ -198,6 +198,7 @@ bool godot::SpiderDuo::touchesRope(Node2D *obj)
 
         Vector2 closest = a + ab * t;
 
+        print_line((p - closest).length());
         if ((p - closest).length() <= radius)
         {
             print_line("Collision detected!");
