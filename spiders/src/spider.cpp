@@ -177,7 +177,7 @@ void godot::SpiderDuo::solve_constraints()
 bool godot::SpiderDuo::touchesRope(Node2D *obj)
 {
     const RopePoint* r = rope.ptr();
-
+    print_line("touches rope called");
     Vector2 p = to_local(obj->get_global_position());
     float radius = 10.0f;
 
@@ -199,6 +199,7 @@ bool godot::SpiderDuo::touchesRope(Node2D *obj)
         Vector2 closest = a + ab * t;
 
         print_line((p - closest).length());
+
         if ((p - closest).length() <= radius)
         {
             print_line("Collision detected!");
