@@ -36,6 +36,8 @@ namespace godot
 
         float max_distance = 300.0f;
         bool is_tense = false;
+
+        int mHealthPoints = 100;
     public:
         void _ready();
         void _process(double delta);
@@ -46,6 +48,9 @@ namespace godot
 
         bool touchesRope(Node2D* obj);
         bool isTense() const;
+        void takeDamage(int amount);
+
+        bool collidesSpiders(Vector2 point);
 
     };
 

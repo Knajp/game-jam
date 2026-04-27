@@ -6,5 +6,6 @@
 
 [node name="SpiderDuo" type="SpiderDuo" parent="." unique_id=1595930435]
 
-[node name="Enemy" type="Enemy" parent="." unique_id=1633927416]
+[node name="Enemy" type="Enemy" parent="." unique_id=1177605863]
+position = Vector2(500, 500)
 texture = ExtResource("1_wtcfe")

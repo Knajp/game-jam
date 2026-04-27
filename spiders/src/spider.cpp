@@ -1,6 +1,8 @@
 #include "spider.hpp"
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/input.hpp>
+#include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/time.hpp>
 
 void godot::Spider::_bind_methods()
 {
@@ -66,6 +68,10 @@ void godot::SpiderDuo::_ready()
 
 void godot::SpiderDuo::_process(double delta)
 {
+    if (Engine::get_singleton()->is_editor_hint()) {
+        return;
+    }
+
     Input* input = Input::get_singleton();
 
     Vector2 ursulaVelocity;
@@ -134,6 +140,26 @@ void godot::SpiderDuo::_draw()
     {
         draw_line(rope[i].pos, rope[i + 1].pos, col, 2.0);
     }
+
+    float health_ratio = mHealthPoints / 100.0f;
+
+    Vector2 bar_pos = posMartin + Vector2(-50, -40);
+    Vector2 bar_size = Vector2(100, 10);
+
+    draw_rect(Rect2(bar_pos, bar_size), Color(0.2, 0.2, 0.2));
+
+    draw_rect(
+        Rect2(bar_pos, Vector2(bar_size.x * health_ratio, bar_size.y)),
+        Color(0, 1, 0)
+    );
+
+    bar_pos = posUrsula + Vector2(-50, -40);
+        draw_rect(Rect2(bar_pos, bar_size), Color(0.2, 0.2, 0.2));
+
+    draw_rect(
+        Rect2(bar_pos, Vector2(bar_size.x * health_ratio, bar_size.y)),
+        Color(0, 1, 0)
+    );
 }
 
 void godot::SpiderDuo::verlet_step(double delta)
@@ -212,6 +238,30 @@ bool godot::SpiderDuo::isTense() const
     return is_tense;
 }
 
+void godot::SpiderDuo::takeDamage(int amount)
+{
+    mHealthPoints -= amount;
+    if(mHealthPoints <= 0)
+        queue_free();
+}
+
+bool godot::SpiderDuo::collidesSpiders(Vector2 point)
+{
+    Vector2 ursulaPos = pUrsula->get_position();
+    Vector2 martinPos = pMartin->get_position();
+
+    Vector2 ursulaVec = point - ursulaPos;
+    Vector2 martinVec = point - martinPos;
+
+    float ursulaDist = ursulaVec.x * ursulaVec.x + ursulaVec.y * ursulaVec.y;
+    float martinDist = martinVec.x * martinVec.x + martinVec.y * martinVec.y;
+
+    if(ursulaDist < 400.0f || martinDist < 400.0f)
+        return true;
+
+    return false;
+}
+
 void godot::Enemy::_bind_methods()
 {
 }
@@ -231,6 +281,9 @@ void godot::Enemy::_ready()
 
 void godot::Enemy::_process(double delta)
 {
+    if (Engine::get_singleton()->is_editor_hint()) {
+        return;
+    }
     Spider* spider = Object::cast_to<Spider>(spiderNode);
     SpiderDuo* spiderDuo = Object::cast_to<SpiderDuo>(spidersNode);
 
@@ -247,5 +300,19 @@ void godot::Enemy::_process(double delta)
     {
         queue_free();
         return;
+    }
+
+    static double lastDamageTime = -1000.0;
+    double cooldown = 2.0;
+    if(spiderDuo->collidesSpiders(get_position()))
+    {
+        double now = Time::get_singleton()->get_ticks_msec() / 1000.0;
+
+        if(now - lastDamageTime < cooldown)
+            return;
+        
+        lastDamageTime = now;
+
+        spiderDuo->takeDamage(20);
     }
 }
