@@ -74,6 +74,10 @@ namespace godot
     private:
         Node* spiderNode = nullptr;
         Node* spidersNode = nullptr;
+
+        int health = 50;
+        double lastTakenTime = -1000.0;
+        double lastDamageTime = -1000.0;
     };
 
 }
