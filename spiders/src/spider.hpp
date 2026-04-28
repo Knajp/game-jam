@@ -2,6 +2,7 @@
 
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/sprite2d.hpp>
+#include <godot_cpp/classes/tile_map_layer.hpp>
 
 namespace godot
 {
@@ -10,6 +11,10 @@ namespace godot
         Vector2 pos;
         Vector2 prev_pos;
         bool pinned = false;
+
+        bool colliding = false;
+        Vector2 collision_normal = Vector2();
+
     };
     class Spider : public Sprite2D
     {
@@ -32,9 +37,9 @@ namespace godot
 
         Vector<RopePoint> rope;
         int rope_segments = 20;
-        float rope_length = 15.0f;
+        float rope_length = 60.0f;
 
-        float max_distance = 75.0f;
+        float max_rope_length = 75.0f;
         bool is_tense = false;
 
         int mHealthPoints = 100;
@@ -45,6 +50,8 @@ namespace godot
 
         void verlet_step(double delta);
         void solve_constraints();
+        void rope_collisions(TileMapLayer* tilemap);
+        bool probe_tile_collision(TileMapLayer* tilemap, Vector2 world_pos, Vector2& outNormal);
 
         bool touchesRope(Node2D* obj);
         bool isTense() const;

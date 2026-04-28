@@ -1,4 +1,6 @@
 extends Node2D
 
-func _process(delta: float) -> void:
-	pass
+@export var camera : Camera2D
+@export var marcin : Spider
+@export var urszula : Spider
+ 
