@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bl7m8hc41eojk" path="res://scenes/floor0/startingRoom0/starting_room_0.gd" id="1_5qwtx"]
 [ext_resource type="Texture2D" uid="uid://dga7ufhvcfekg" path="res://assets/tilemap.png" id="1_qmvw1"]
+[ext_resource type="AudioStream" uid="uid://dslakf6f5fyly" path="res://assets/sound/level1.wav" id="3_5qeh6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5qwtx"]
 texture = ExtResource("1_qmvw1")
@@ -183,3 +184,7 @@ tile_map_data = PackedByteArray("AAD6/wQAAAAEAAEAAAAFAAQAAAAFAAEAAAD7/wQAAAAFAAI
 tile_set = SubResource("TileSet_6o2lv")
 
 [node name="SpiderDuo" type="SpiderDuo" parent="." unique_id=1411562613]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1588257265]
+stream = ExtResource("3_5qeh6")
+autoplay = true
