@@ -52,7 +52,8 @@ namespace godot
         void solve_constraints();
         void rope_collisions(TileMapLayer* tilemap);
         bool probe_tile_collision(TileMapLayer* tilemap, Vector2 world_pos, Vector2& outNormal);
-
+        void interact_bird();
+        
         bool touchesRope(Node2D* obj);
         bool isTense() const;
         void takeDamage(int amount);
@@ -70,6 +71,7 @@ namespace godot
     public:
         void _ready();
         void _process(double delta);
+        void _draw();
 
     private:
         Node* spiderNode = nullptr;
