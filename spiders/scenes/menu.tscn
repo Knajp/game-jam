@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://co21a1srh4qqm"]
+
+[ext_resource type="Script" path="res://scenes/menu.gd" id="1_vjb58"]
+[ext_resource type="Texture2D" path="res://assets/baner.png" id="2_con2f"]
+[ext_resource type="AudioStream" path="res://assets/sound/music/menu.wav" id="3_con2f"]
+[ext_resource type="Texture2D" path="res://assets/start.png" id="3_g3eks"]
+[ext_resource type="Texture2D" path="res://assets/opcje.png" id="4_v86rl"]
+[ext_resource type="Texture2D" path="res://assets/wyjscie.png" id="5_13sgg"]
+
+[node name="Control" type="Control" unique_id=985639302]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vjb58")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=644316453]
+layout_mode = 0
+offset_right = 1159.1111
+offset_bottom = 652.0
+texture = ExtResource("2_con2f")
+expand_mode = 1
+
+[node name="MainButtons" type="VBoxContainer" parent="." unique_id=931963270]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.8441358
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="start" type="TextureButton" parent="MainButtons" unique_id=1585796004]
+layout_mode = 2
+texture_normal = ExtResource("3_g3eks")
+
+[node name="options" type="TextureButton" parent="MainButtons" unique_id=327614085]
+layout_mode = 2
+texture_normal = ExtResource("4_v86rl")
+
+[node name="quit" type="TextureButton" parent="MainButtons" unique_id=916373209]
+layout_mode = 2
+texture_normal = ExtResource("5_13sgg")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=431940777]
+stream = ExtResource("3_con2f")
+autoplay = true
+bus = &"Music"
+
+[node name="Options" type="Panel" parent="." unique_id=1725722604]
+visible = false
+layout_mode = 1
+offset_right = 1160.0
+offset_bottom = 657.0
+
+[node name="Label" type="Label" parent="Options" unique_id=1132869259]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 27.0
+offset_right = 168.5
+offset_bottom = 102.5
+grow_horizontal = 2
+text = "OPCJE
+"
+
+[node name="back" type="Button" parent="Options" unique_id=474889075]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -98.0
+offset_right = 66.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "WRÓĆ
+"
+
+[node name="volume" type="VBoxContainer" parent="Options" unique_id=925852672]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -488.0
+offset_top = -13.5
+offset_right = 446.0
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="Options/volume" unique_id=1064169576]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Muzyka"
+
+[node name="volume_slider" type="HSlider" parent="Options/volume" unique_id=1806513953]
+layout_mode = 2
+
+[node name="volume_label" type="Label" parent="Options/volume" unique_id=610890525]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "67%"
+
+[node name="fps" type="VBoxContainer" parent="Options" unique_id=429086080]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 96.0
+offset_top = -84.5
+offset_right = -141.0
+offset_bottom = -14.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="fps_slider" type="HSlider" parent="Options/fps" unique_id=1869825216]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Options/fps" unique_id=1581807074]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "FPS"
+
+[node name="fps_label" type="Label" parent="Options/fps" unique_id=1904279087]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "67 FPS"
+
+[connection signal="pressed" from="MainButtons/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MainButtons/options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MainButtons/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Options/back" to="." method="_on_back_pressed"]
+[connection signal="value_changed" from="Options/volume/volume_slider" to="." method="_on_volume_value_changed"]
+[connection signal="value_changed" from="Options/fps/fps_slider" to="." method="_on_fps_value_changed"]
