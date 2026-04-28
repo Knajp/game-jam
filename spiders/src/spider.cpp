@@ -9,8 +9,7 @@
 
 void godot::Spider::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("touchesRope", "obj"), &SpiderDuo::touchesRope);
-    ClassDB::bind_method(D_METHOD("takeDamage", "amount"), &SpiderDuo::takeDamage);
+
 }
 
 void godot::Spider::_ready()
@@ -25,6 +24,8 @@ void godot::Spider::_process(double delta)
 
 void godot::SpiderDuo::_bind_methods()
 {
+    ClassDB::bind_method(D_METHOD("touchesRope", "obj"), &SpiderDuo::touchesRope);
+    ClassDB::bind_method(D_METHOD("takeDamage", "amount"), &SpiderDuo::takeDamage);
 }
 
 void godot::SpiderDuo::_ready()
@@ -427,8 +428,9 @@ void godot::Enemy::_ready()
     Ref<Texture2D> source = ResourceLoader::get_singleton()->load("zuk.png");
 
     set_texture(source);
+    set_scale({0.5f, 0.5f});
 
-    set_global_position({500.0f, 500.0f});
+    set_global_position({55.0f, -45.0f});
     spidersNode = get_parent()->get_node_or_null("SpiderDuo");
     spiderNode = spidersNode->get_node_or_null("Ursula");
 
@@ -450,16 +452,26 @@ void godot::Enemy::_process(double delta)
 
     Vector2 unitVec = (spiderPos - bugPos).normalized();
 
-    set_global_position(bugPos + unitVec * 100.0 * delta);
+    set_global_position(bugPos + unitVec * 40.0 * delta);
+
+    double cooldown = 2.5;
 
     if(spiderDuo->touchesRope(this) && spiderDuo->isTense())
+    {
+        double now = Time::get_singleton()->get_ticks_msec() / 1000.0;
+
+        if(now - lastTakenTime < cooldown)
+            return;
+        
+        health -= 30;
+    }
+
+    if(health <= 0)
     {
         queue_free();
         return;
     }
-
-    static double lastDamageTime = -1000.0;
-    double cooldown = 2.0;
+    cooldown = 2.0;
     if(spiderDuo->collidesSpiders(get_position()))
     {
         double now = Time::get_singleton()->get_ticks_msec() / 1000.0;
