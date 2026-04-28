@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-@export var speed := 5.0
+@export var speed := 3.0
 @export var max_distance := 100.0
-@export var fire_rate := 2.5
+@export var fire_rate := 3
 
 var player_url = null
 var player_mrc = null

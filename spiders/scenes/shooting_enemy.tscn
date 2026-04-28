@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://u2agdm0yqnjb"]
+[gd_scene format=3 uid="uid://dy13erqqv07g0"]
 
-[ext_resource type="Script" uid="uid://c4k34du5l2qhm" path="res://character_body_2d.gd" id="1_7tkxy"]
+[ext_resource type="Script" path="res://character_body_2d.gd" id="1_7tkxy"]
 [ext_resource type="Texture2D" uid="uid://dkrplqe17pvdg" path="res://mucha.png" id="2_2di7f"]
 
 [node name="shooting_enemy" type="Node2D" unique_id=1335525654]
