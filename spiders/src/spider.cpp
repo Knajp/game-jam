@@ -8,6 +8,7 @@
 void godot::Spider::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("touchesRope", "obj"), &SpiderDuo::touchesRope);
+    ClassDB::bind_method(D_METHOD("takeDamage", "amount"), &SpiderDuo::takeDamage);
 }
 
 void godot::Spider::_ready()
@@ -102,14 +103,14 @@ void godot::SpiderDuo::_process(double delta)
 
     Vector2 ursula_pos = pUrsula->get_position();
 
-    Vector2 ursula_try_x = ursula_pos + Vector2(ursula_dir.x * 200.0f * delta, 0);
+    Vector2 ursula_try_x = ursula_pos + Vector2(ursula_dir.x * 100.0f * delta, 0);
     Vector2 ursula_local_x = tilemap_layer->to_local(ursula_try_x);
     Vector2i cell_x = tilemap_layer->local_to_map(ursula_local_x);
 
     if (tilemap_layer->get_cell_source_id(cell_x) == -1)
         ursula_pos.x = ursula_try_x.x;
 
-    Vector2 ursula_try_y = ursula_pos + Vector2(0, ursula_dir.y * 200.0f * delta);
+    Vector2 ursula_try_y = ursula_pos + Vector2(0, ursula_dir.y * 100.0f * delta);
     Vector2 ursula_local_y = tilemap_layer->to_local(ursula_try_y);
     Vector2i cell_y = tilemap_layer->local_to_map(ursula_local_y);
 
@@ -122,14 +123,14 @@ void godot::SpiderDuo::_process(double delta)
 
     Vector2 martin_pos = pMartin->get_position();
 
-    Vector2 martin_try_x = martin_pos + Vector2(martin_dir.x * 200.0f * delta, 0);
+    Vector2 martin_try_x = martin_pos + Vector2(martin_dir.x * 100.0f * delta, 0);
     Vector2 martin_local_x = tilemap_layer->to_local(martin_try_x);
     Vector2i martin_cell_x = tilemap_layer->local_to_map(martin_local_x);
 
     if (tilemap_layer->get_cell_source_id(martin_cell_x) == -1)
         martin_pos.x = martin_try_x.x;
 
-    Vector2 martin_try_y = martin_pos + Vector2(0, martin_dir.y * 200.0f * delta);
+    Vector2 martin_try_y = martin_pos + Vector2(0, martin_dir.y * 100.0f * delta);
     Vector2 martin_local_y = tilemap_layer->to_local(martin_try_y);
     Vector2i martin_cell_y = tilemap_layer->local_to_map(martin_local_y);
 
@@ -148,8 +149,33 @@ void godot::SpiderDuo::_process(double delta)
 
         Vector2 correction = dir * (excess * 0.5f);
 
-        pMartin->set_position(pMartin->get_position() + correction);
-        pUrsula->set_position(pUrsula->get_position() - correction);
+        Vector2 martin = pMartin->get_position();
+        Vector2 ursula = pUrsula->get_position();
+
+        Vector2 martin_try_x = martin + Vector2(correction.x, 0);
+        Vector2 martin_try_y = martin + Vector2(0, correction.y);
+
+        Vector2 ursula_try_x = ursula - Vector2(correction.x, 0);
+        Vector2 ursula_try_y = ursula - Vector2(0, correction.y);
+
+        Vector2i m_cell_x = tilemap_layer->local_to_map(tilemap_layer->to_local(martin_try_x));
+        if (tilemap_layer->get_cell_source_id(m_cell_x) == -1)
+            martin.x = martin_try_x.x;
+
+        Vector2i u_cell_x = tilemap_layer->local_to_map(tilemap_layer->to_local(ursula_try_x));
+        if (tilemap_layer->get_cell_source_id(u_cell_x) == -1)
+            ursula.x = ursula_try_x.x;
+
+        Vector2i m_cell_y = tilemap_layer->local_to_map(tilemap_layer->to_local(martin_try_y));
+        if (tilemap_layer->get_cell_source_id(m_cell_y) == -1)
+            martin.y = martin_try_y.y;
+
+        Vector2i u_cell_y = tilemap_layer->local_to_map(tilemap_layer->to_local(ursula_try_y));
+        if (tilemap_layer->get_cell_source_id(u_cell_y) == -1)
+            ursula.y = ursula_try_y.y;
+
+        pMartin->set_position(martin);
+        pUrsula->set_position(ursula);
 
         is_tense = true;
     } else is_tense = false;
