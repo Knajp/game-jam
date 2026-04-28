@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xmlhclsmh6vc"
-path="res://.godot/imported/mucha.png-125ee141ea2e984b117914f8b46c722d.ctex"
+uid="uid://bxxg686hdcn22"
+path="res://.godot/imported/zuk.png-573f708d585f394237e0704c50908a73.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mucha.png"
-dest_files=["res://.godot/imported/mucha.png-125ee141ea2e984b117914f8b46c722d.ctex"]
+source_file="res://zuk.png"
+dest_files=["res://.godot/imported/zuk.png-573f708d585f394237e0704c50908a73.ctex"]
 
 [params]
 

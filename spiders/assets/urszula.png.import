@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xmlhclsmh6vc"
-path="res://.godot/imported/mucha.png-125ee141ea2e984b117914f8b46c722d.ctex"
+uid="uid://d36smgodnw0qb"
+path="res://.godot/imported/urszula.png-e8aaf385ef12d91c3dee6791f8b14db9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mucha.png"
-dest_files=["res://.godot/imported/mucha.png-125ee141ea2e984b117914f8b46c722d.ctex"]
+source_file="res://assets/urszula.png"
+dest_files=["res://.godot/imported/urszula.png-e8aaf385ef12d91c3dee6791f8b14db9.ctex"]
 
 [params]
 
