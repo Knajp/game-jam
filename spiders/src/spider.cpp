@@ -3,6 +3,9 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/time.hpp>
+#include <godot_cpp/classes/area2d.hpp>
+#include <godot_cpp/classes/collision_shape2d.hpp>
+#include <godot_cpp/classes/circle_shape2d.hpp>
 
 void godot::Spider::_bind_methods()
 {
@@ -46,6 +49,22 @@ void godot::SpiderDuo::_ready()
 
     pUrsula->set_scale({0.5, 0.5});
     pMartin->set_scale({0.5, 0.5});
+
+    Area2D* area1 = memnew(Area2D);
+    CollisionShape2D* shape = memnew(CollisionShape2D);
+    Ref<CircleShape2D> circle = memnew(CircleShape2D);
+    circle->set_radius(16.0f);
+    shape->set_shape(circle);
+    area1->add_child(shape);
+    pUrsula->add_child(area1);
+
+    Area2D* area2 = memnew(Area2D);
+    CollisionShape2D* shape2 = memnew(CollisionShape2D);
+    Ref<CircleShape2D> circle2 = memnew(CircleShape2D);
+    circle2->set_radius(16.0f);
+    shape2->set_shape(circle2);
+    area2->add_child(shape2);
+    pMartin->add_child(area2);
 
     rope.resize(rope_segments + 1);
 
@@ -209,7 +228,7 @@ void godot::SpiderDuo::_draw()
     Color col;
     if(is_tense)
         col = Color(1,0,0);
-    else col = Color(1,1,1);
+    else col = Color(0.878, 0.588, 0.89);
 
     for(int i = 0; i < rope.size() - 1; i++)
     {
