@@ -18,7 +18,9 @@ func _ready():
 	if spider_duo:
 		player_url = spider_duo.get_node_or_null("Ursula")
 		player_mrc = spider_duo.get_node_or_null("Martin")
-
+	print(spider_duo)
+	print(spider_duo.get_class())
+	print(spider_duo.get_script())
 	ray.enabled = true
 
 	await get_tree().process_frame
