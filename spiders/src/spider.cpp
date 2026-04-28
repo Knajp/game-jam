@@ -3,7 +3,6 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/time.hpp>
-#include <godot_cpp/classes/tile_map_layer.hpp>
 
 void godot::Spider::_bind_methods()
 {
@@ -139,24 +138,30 @@ void godot::SpiderDuo::_process(double delta)
 
     pMartin->set_position(martin_pos);
 
-    Vector2 deltaVec = pUrsula->get_position() - pMartin->get_position();
-    float dist = deltaVec.length();
+    float len = 0.0f;
+    for (int i = 0; i < rope_segments; i++)
+        len += (rope[i + 1].pos - rope[i].pos).length();
 
-    if(dist > max_distance)
+    if(len > max_rope_length)
     {
-        Vector2 dir = deltaVec / dist;
-        float excess = dist - max_distance;
+        Vector2 martin_pull = (rope[1].pos - pMartin->get_position()).normalized();
+        Vector2 ursula_pull = (rope[rope_segments - 1].pos - pUrsula->get_position()).normalized();
 
-        Vector2 correction = dir * (excess * 0.5f);
+        float excess = len - max_rope_length;
+        float move_speed = 100.0f * delta;
+        float correction_amount = MIN(excess * 0.5f, move_speed);
+
+        Vector2 martin_correction = martin_pull * correction_amount;
+        Vector2 ursula_correction = ursula_pull * correction_amount;
 
         Vector2 martin = pMartin->get_position();
         Vector2 ursula = pUrsula->get_position();
 
-        Vector2 martin_try_x = martin + Vector2(correction.x, 0);
-        Vector2 martin_try_y = martin + Vector2(0, correction.y);
+        Vector2 martin_try_x = martin + Vector2(martin_correction.x, 0);
+        Vector2 martin_try_y = martin + Vector2(0, martin_correction.y);
 
-        Vector2 ursula_try_x = ursula - Vector2(correction.x, 0);
-        Vector2 ursula_try_y = ursula - Vector2(0, correction.y);
+        Vector2 ursula_try_x = ursula + Vector2(ursula_correction.x, 0);
+        Vector2 ursula_try_y = ursula + Vector2(0, ursula_correction.y);
 
         Vector2i m_cell_x = tilemap_layer->local_to_map(tilemap_layer->to_local(martin_try_x));
         if (tilemap_layer->get_cell_source_id(m_cell_x) == -1)
@@ -180,8 +185,14 @@ void godot::SpiderDuo::_process(double delta)
         is_tense = true;
     } else is_tense = false;
 
-    verlet_step(delta);
-    solve_constraints();
+    int iterations = 10;
+
+    for (int i = 0; i < iterations; i++)
+    {
+        verlet_step(delta);
+        solve_constraints();
+        rope_collisions(tilemap_layer);
+    }
 
     queue_redraw();
 }
@@ -234,9 +245,17 @@ void godot::SpiderDuo::verlet_step(double delta)
     {
         if(p.pinned) continue;
 
-        Vector2 temp = p.pos;
-        p.pos += (p.pos - p.prev_pos);
-        p.prev_pos = temp;
+        Vector2 velocity = p.pos - p.prev_pos;
+
+        if(p.colliding)
+        {
+            velocity -= velocity.dot(p.collision_normal) * p.collision_normal;
+            velocity *= 0.95f;
+
+        }
+
+        p.prev_pos = p.pos;
+        p.pos += velocity;
     }
 }
 
@@ -259,10 +278,64 @@ void godot::SpiderDuo::solve_constraints()
 
             Vector2 correction = delta.normalized() * (error * 0.5f);
 
-            if(!a.pinned) a.pos += correction;
-            if(!b.pinned) b.pos -= correction;
+            if(!a.pinned)
+            {
+                if(!a.colliding)
+                    a.pos += correction;
+                else
+                    a.pos += correction - a.collision_normal * correction.dot(a.collision_normal);
+                
+            }
+            if(!b.pinned)
+            {
+                if(!b.colliding)
+                    b.pos -= correction;
+                else 
+                    b.pos -= correction - b.collision_normal * correction.dot(b.collision_normal);
+            }
         }
     }
+}
+
+void godot::SpiderDuo::rope_collisions(TileMapLayer *tilemap)
+{
+    for(auto& p : rope)
+    {
+        Vector2 normal;
+
+        if(probe_tile_collision(tilemap, p.pos, normal))
+        {
+            p.colliding = true;
+            p.collision_normal = normal;
+
+            p.pos += normal * 2;
+        }
+        else
+        {
+            p.colliding = false;
+            p.collision_normal = Vector2();
+
+        }
+
+    }
+}
+
+bool godot::SpiderDuo::probe_tile_collision(TileMapLayer *tilemap, Vector2 world_pos, Vector2 &outNormal)
+{
+    Vector2 local = tilemap->to_local(world_pos);
+    Vector2i cell = tilemap->local_to_map(local);
+
+    if(tilemap->get_cell_source_id(cell) == -1) return false;
+
+    Vector2 center = tilemap->map_to_local(cell);
+    Vector2 diff = world_pos - center;
+
+    if(Math::abs(diff.x) > Math::abs(diff.y))
+        outNormal = Vector2(Math::sign(diff.x), 0);
+    else
+        outNormal = Vector2(0, Math::sign(diff.y));
+
+    return true;
 }
 
 bool godot::SpiderDuo::touchesRope(Node2D *obj)
