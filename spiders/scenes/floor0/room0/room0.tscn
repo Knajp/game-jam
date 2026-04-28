@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dga7ufhvcfekg" path="res://assets/tilemap.png" id="1_esa82"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5qwtx"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jg6f2"]
 texture = ExtResource("1_esa82")
 0:0/0 = 0
 1:0/0 = 0
@@ -16,6 +16,7 @@ texture = ExtResource("1_esa82")
 8:0/animation_frame_0/duration = 1.0
 8:0/animation_frame_1/duration = 1.0
 8:0/0 = 0
+0:1/animation_speed = 0.7
 0:1/animation_frame_0/duration = 1.0
 0:1/animation_frame_1/duration = 1.0
 0:1/animation_frame_2/duration = 1.0
@@ -42,6 +43,7 @@ texture = ExtResource("1_esa82")
 0:3/animation_frame_2/duration = 1.0
 0:3/animation_frame_3/duration = 1.0
 0:3/0 = 0
+0:2/animation_speed = 0.8
 0:2/animation_frame_0/duration = 1.0
 0:2/animation_frame_1/duration = 1.0
 0:2/animation_frame_2/duration = 1.0
@@ -84,17 +86,170 @@ texture = ExtResource("1_esa82")
 10:2/animation_frame_0/duration = 1.0
 10:2/animation_frame_1/duration = 1.0
 10:2/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+3:9/0 = 0
+2:9/0 = 0
+1:9/0 = 0
+0:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:8/0 = 0
+7:8/0 = 0
+6:8/0 = 0
+5:8/0 = 0
+4:8/0 = 0
+3:8/0 = 0
+8:9/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+4:6/0 = 0
+3:6/0 = 0
+2:7/0 = 0
+1:7/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_5qeh6"]
-physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_5qwtx")
+[sub_resource type="TileSet" id="TileSet_h7mji"]
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_jg6f2")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_17lv5"]
+texture = ExtResource("1_esa82")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/animation_frame_0/duration = 1.0
+6:0/animation_frame_1/duration = 1.0
+6:0/0 = 0
+8:0/animation_frame_0/duration = 1.0
+8:0/animation_frame_1/duration = 1.0
+8:0/0 = 0
+0:1/animation_speed = 0.7
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/animation_frame_3/duration = 1.0
+0:1/0 = 0
+0:4/animation_frame_0/duration = 1.0
+0:4/animation_frame_1/duration = 1.0
+0:4/animation_frame_2/duration = 1.0
+0:4/animation_frame_3/duration = 1.0
+0:4/0 = 0
+0:5/0 = 0
+0:5/0/probability = 0.2
+1:5/0 = 0
+1:5/0/probability = 0.315
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+0:3/animation_frame_0/duration = 1.0
+0:3/animation_frame_1/duration = 1.0
+0:3/animation_frame_2/duration = 1.0
+0:3/animation_frame_3/duration = 1.0
+0:3/0 = 0
+0:2/animation_speed = 0.8
+0:2/animation_frame_0/duration = 1.0
+0:2/animation_frame_1/duration = 1.0
+0:2/animation_frame_2/duration = 1.0
+0:2/animation_frame_3/duration = 1.0
+0:2/0 = 0
+10:0/animation_frame_0/duration = 1.0
+10:0/animation_frame_1/duration = 1.0
+10:0/0 = 0
+10:1/animation_frame_0/duration = 1.0
+10:1/animation_frame_1/duration = 1.0
+10:1/0 = 0
+8:1/animation_frame_0/duration = 1.0
+8:1/animation_frame_1/duration = 1.0
+8:1/0 = 0
+6:1/animation_frame_0/duration = 1.0
+6:1/animation_frame_1/duration = 1.0
+6:1/0 = 0
+5:1/0 = 0
+4:1/0 = 0
+4:2/0 = 0
+4:3/animation_frame_0/duration = 1.0
+4:3/animation_frame_1/duration = 1.0
+4:3/0 = 0
+5:2/0 = 0
+6:2/animation_frame_0/duration = 1.0
+6:2/animation_frame_1/duration = 1.0
+6:2/0 = 0
+6:3/animation_frame_0/duration = 1.0
+6:3/animation_frame_1/duration = 1.0
+6:3/0 = 0
+8:3/animation_frame_0/duration = 1.0
+8:3/animation_frame_1/duration = 1.0
+8:3/0 = 0
+8:2/animation_frame_0/duration = 1.0
+8:2/animation_frame_1/duration = 1.0
+8:2/0 = 0
+10:3/animation_frame_0/duration = 1.0
+10:3/animation_frame_1/duration = 1.0
+10:3/0 = 0
+10:2/animation_frame_0/duration = 1.0
+10:2/animation_frame_1/duration = 1.0
+10:2/0 = 0
+0:10/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+3:10/0 = 0
+3:9/0 = 0
+2:9/0 = 0
+1:9/0 = 0
+0:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+6:9/0 = 0
+7:9/0 = 0
+8:8/0 = 0
+7:8/0 = 0
+6:8/0 = 0
+5:8/0 = 0
+4:8/0 = 0
+3:8/0 = 0
+8:9/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+4:6/0 = 0
+3:6/0 = 0
+2:7/0 = 0
+1:7/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_bjxll"]
+physics_layer_0/collision_layer = 2
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_17lv5")
 
 [node name="StartingRoom0" type="Node2D" unique_id=1443442679]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=974907022]
-tile_map_data = PackedByteArray("AAACAPv/AAAAAAAAAAACAPz/AAAAAAIAAAACAP3/AAAAAAQAAAADAPv/AAABAAAAAAADAPz/AAAAAAIAAAADAP3/AAAAAAIAAAAEAPv/AAAAAAAAAAAEAPz/AAAAAAIAAAAEAP3/AAAAAAEAAAAFAPv/AAADAAAAAAAFAPz/AAAFAAAAAAAFAP3/AAAFAAAAAAADAP//AAAAAAEAAAADAAAAAAAAAAEAAAADAAEAAAAAAAEAAAADAAIAAAAAAAIAAAADAAMAAAAFAAIAAAAEAP//AAAAAAEAAAAEAAAAAAAAAAMAAAAEAAEAAAAAAAIAAAAEAAIAAAAAAAQAAAAEAAMAAAAEAAIAAAAFAP//AAAAAAEAAAAFAAAAAAAAAAEAAAAFAAEAAAAFAAAAAAAFAAIAAAAFAAAAAAAFAAMAAAAFAAEAAAD8/wEAAAAAAAEAAAD8/wIAAAAAAAMAAAD8/wMAAAAEAAIAAAD9/wEAAAAAAAIAAAD9/wIAAAAAAAEAAAD9/wMAAAAFAAIAAAD+/wEAAAAAAAIAAAD+/wIAAAAAAAEAAAD+/wMAAAAEAAIAAAD6/wEAAAAEAAAAAAD6/wIAAAAEAAAAAAD6/wMAAAAEAAEAAAD7/wEAAAAAAAIAAAD7/wIAAAAAAAIAAAD7/wMAAAAFAAIAAAD8//z/AAAAAAIAAAD8//3/AAAGAAAAAAD8//7/AAAGAAEAAAD8////AAAGAAIAAAD9//z/AAAAAAEAAAD9//7/AAAIAAEAAAD9////AAAIAAIAAAD+//7/AAAKAAEAAAD+////AAAKAAIAAAD6//v/AAACAAAAAAD6//z/AAAEAAAAAAD6//3/AAAEAAAAAAD6//7/AAAEAAAAAAD6////AAAAAAEAAAD7//v/AAAAAAAAAAD7//z/AAAAAAIAAAD7//3/AAAAAAMAAAD7//7/AAAAAAEAAAD7////AAAAAAIAAAD8//v/AAABAAAAAAD9//v/AAAAAAAAAAACAAMAAAAEAAIAAAABAAMAAAAFAAIAAAABAPv/AAABAAAAAAD+//v/AAABAAAAAAAFAP7/AAAFAAAAAAABAP//AAAAAAIAAAABAAAAAAAAAAEAAAAAAP//AAAAAAEAAAAAAP7/AAAAAAEAAAAAAP3/AAAAAAEAAAD///3/AAAAAAIAAAD+//3/AAAKAAAAAAD///7/AAAAAAQAAAD///z/AAAAAAEAAAD+//z/AAAAAAEAAAAAAPz/AAAAAAEAAAABAPz/AAAAAAMAAAABAP3/AAAAAAIAAAABAP7/AAAAAAEAAAD/////AAAAAAEAAAD//wAAAAAAAAEAAAAAAAAAAAAAAAEAAAD9/wAAAAAAAAEAAAD8/wAAAAAAAAMAAAD7/wAAAAAAAAEAAAD6/wAAAAAAAAEAAAABAAEAAAAAAAEAAAAAAAEAAAAAAAQAAAAAAAIAAAAAAAEAAAD//wIAAAAAAAEAAAD//wEAAAAAAAEAAAD//wMAAAAAAAEAAAAAAAMAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAEAAAAAAAEAAAACAAAAAAAAAAIAAAACAP//AAAAAAMAAAACAP7/AAAAAAEAAAADAP7/AAAAAAEAAAAEAP7/AAAAAAEAAAAAAPv/AAAAAAQAAAD///v/AAAAAAEAAAD+/wAAAAAAAAIAAAD9//3/AAAIAAAAAAA=")
-tile_set = SubResource("TileSet_5qeh6")
+[node name="Ground" type="TileMapLayer" parent="." unique_id=974907022]
+tile_map_data = PackedByteArray("AAACAPz/AAAAAAIAAAACAP3/AAAAAAQAAAADAPz/AAAAAAIAAAADAP3/AAAAAAIAAAAEAPz/AAAAAAIAAAAEAP3/AAAAAAEAAAADAP//AAAAAAEAAAADAAAAAAAAAAEAAAADAAEAAAAAAAEAAAADAAIAAAAAAAIAAAADAAMAAAAAAAEAAAAEAP//AAAAAAEAAAAEAAAAAAAAAAMAAAAEAAEAAAAAAAIAAAAEAAIAAAAAAAQAAAAEAAMAAAAAAAEAAAAFAP//AAAAAAEAAAAFAAAAAAAAAAEAAAD8/wEAAAAAAAEAAAD8/wIAAAAAAAMAAAD9/wEAAAAAAAIAAAD9/wIAAAAAAAEAAAD+/wEAAAAAAAIAAAD+/wIAAAAAAAEAAAD7/wEAAAAAAAIAAAD7/wIAAAAAAAIAAAD8//z/AAAAAAIAAAD8//3/AAAAAAEAAAD8//7/AAAAAAEAAAD8////AAAAAAEAAAD9//z/AAAAAAEAAAD9//7/AAAAAAEAAAD9////AAAAAAEAAAD+//7/AAAAAAEAAAD+////AAAAAAEAAAD6////AAAAAAEAAAD7//z/AAAAAAIAAAD7//3/AAAAAAMAAAD7//7/AAAAAAEAAAD7////AAAAAAIAAAACAAMAAAAAAAEAAAABAAMAAAAAAAEAAAABAP//AAAAAAIAAAABAAAAAAAAAAEAAAAAAP//AAAAAAEAAAAAAP7/AAAAAAEAAAAAAP3/AAAAAAEAAAD///3/AAAAAAIAAAD+//3/AAAAAAEAAAD///7/AAAAAAQAAAD///z/AAAAAAEAAAD+//z/AAAAAAEAAAAAAPz/AAAAAAEAAAABAPz/AAAAAAMAAAABAP3/AAAAAAIAAAABAP7/AAAAAAEAAAD/////AAAAAAEAAAD//wAAAAAAAAEAAAAAAAAAAAAAAAEAAAD9/wAAAAAAAAEAAAD8/wAAAAAAAAMAAAD7/wAAAAAAAAEAAAD6/wAAAAAAAAEAAAABAAEAAAAAAAEAAAAAAAEAAAAAAAQAAAAAAAIAAAAAAAEAAAD//wIAAAAAAAEAAAD//wEAAAAAAAEAAAD//wMAAAAAAAEAAAAAAAMAAAAAAAEAAAABAAIAAAAAAAEAAAACAAIAAAAAAAEAAAACAAEAAAAAAAEAAAACAAAAAAAAAAIAAAACAP//AAAAAAMAAAACAP7/AAAAAAEAAAADAP7/AAAAAAEAAAAEAP7/AAAAAAEAAAAAAPv/AAAAAAQAAAD///v/AAAAAAEAAAD+/wAAAAAAAAIAAAD9//3/AAAAAAEAAAD7/wMAAAAAAAEAAAD8/wMAAAAAAAEAAAD9/wMAAAAAAAEAAAD+/wMAAAAAAAEAAAD//wQAAAAAAAEAAAAAAAQAAAAAAAEAAAA=")
+tile_set = SubResource("TileSet_h7mji")
 
-[node name="Camera2D" type="Camera2D" parent="TileMapLayer" unique_id=1548051302]
+[node name="Camera2D" type="Camera2D" parent="Ground" unique_id=1548051302]
 zoom = Vector2(2, 2)
 drag_vertical_offset = -0.2
+
+[node name="Collisions" type="TileMapLayer" parent="." unique_id=1926108442]
+tile_map_data = PackedByteArray("AAD9////AAAEAAAAAAD9/wAAAAAEAAAAAAD9/wEAAAAEAAEAAAACAAEAAAAFAAEAAAD9//7/AAACAAAAAAACAP7/AAADAAAAAAACAAAAAAAFAAAAAAACAP//AAAFAAAAAAD+/wEAAAAFAAQAAAABAAEAAAAEAAQAAAD+//7/AAAHAAQAAAABAP7/AAAGAAQAAAABAAQAAAAEAAQAAAAFAAQAAAAFAAEAAAAEAAQAAAAFAAIAAAADAAQAAAAFAAIAAAACAAQAAAAFAAIAAAAFAAMAAAAFAAAAAAAFAAIAAAAFAAAAAAAFAAEAAAAEAAQAAAD6//v/AAACAAAAAAD+/wQAAAAFAAQAAAAFAPv/AAADAAAAAAD+//v/AAAHAAQAAAD6/wQAAAAEAAEAAAABAPv/AAAGAAQAAAAEAPv/AAABAAAAAAADAPv/AAABAAAAAAACAPv/AAABAAAAAAD9//v/AAABAAAAAAD8//v/AAABAAAAAAD7//v/AAABAAAAAAD9/wQAAAAFAAIAAAD8/wQAAAAFAAIAAAD7/wQAAAAFAAIAAAD6/wMAAAAEAAAAAAD6/wIAAAAEAAAAAAD6/wEAAAAFAAQAAAD6//7/AAAHAAQAAAD6//3/AAAEAAAAAAD6//z/AAAEAAAAAAAFAP7/AAAGAAQAAAAFAP3/AAAFAAAAAAAFAPz/AAAFAAAAAAA=")
+tile_set = SubResource("TileSet_bjxll")
