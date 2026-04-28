@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bl7m8hc41eojk" path="res://scenes/floor0/startingRoom0/starting_room_0.gd" id="1_5qwtx"]
 [ext_resource type="Texture2D" uid="uid://dga7ufhvcfekg" path="res://assets/tilemap.png" id="1_qmvw1"]
+[ext_resource type="PackedScene" uid="uid://u2agdm0yqnjb" path="res://scenes/shooting_enemy.tscn" id="3_5qeh6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5qwtx"]
 texture = ExtResource("1_qmvw1")
@@ -182,4 +183,7 @@ drag_vertical_offset = -0.2
 tile_map_data = PackedByteArray("AAD6/wQAAAAEAAEAAAAFAAQAAAAFAAEAAAD7/wQAAAAFAAIAAAD9/wQAAAAFAAIAAAABAAQAAAAFAAIAAAADAAQAAAAFAAIAAAACAAQAAAAEAAIAAAAEAAQAAAAEAAIAAAD+/wQAAAAEAAIAAAD8/wQAAAAEAAIAAAD6/wMAAAAEAAAAAAD6/wIAAAAEAAAAAAD6/wEAAAAEAAAAAAD6//7/AAAEAAAAAAD6//3/AAAEAAAAAAD6//z/AAAEAAAAAAD6//v/AAACAAAAAAD7//v/AAAAAAAAAAD9//v/AAAAAAAAAAACAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAD8//v/AAABAAAAAAD+//v/AAABAAAAAAABAPv/AAABAAAAAAADAPv/AAABAAAAAAAFAPv/AAADAAAAAAAFAPz/AAAFAAAAAAAFAP3/AAAFAAAAAAAFAP7/AAAFAAAAAAAFAAEAAAAFAAAAAAAFAAIAAAAFAAAAAAAFAAMAAAAFAAAAAAABAAEAAAABAAUAAAD+//7/AAABAAUAAAA=")
 tile_set = SubResource("TileSet_6o2lv")
 
-[node name="SpiderDuo" type="SpiderDuo" parent="." unique_id=1411562613]
+[node name="SpiderDuo" type="SpiderDuo" parent="." unique_id=1411562613 groups=["Player"]]
+
+[node name="shooting_enemy" parent="." unique_id=1335525654 instance=ExtResource("3_5qeh6")]
+position = Vector2(-54, -32)

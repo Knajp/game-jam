@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dwh68nyxyaml0"]
+
+[ext_resource type="Script" uid="uid://cx43bbotr4jra" path="res://scenes/bullet_script.gd" id="1_bw2vd"]
+[ext_resource type="PackedScene" uid="uid://cibc6dcee016b" path="res://scenes/bullet.tscn" id="2_x4051"]
+
+[node name="bullet_scene" type="Node2D" unique_id=857182362]
+script = ExtResource("1_bw2vd")
+
+[node name="bullet" parent="." unique_id=41184474 instance=ExtResource("2_x4051")]
+
+[connection signal="body_entered" from="bullet" to="bullet" method="_on_body_entered"]
